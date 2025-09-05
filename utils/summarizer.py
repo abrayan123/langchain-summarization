@@ -30,7 +30,7 @@ def build_summarization_chain(sentences: int = 3) -> LLMChain:
 
     Task: Summarize the following text into **exactly {sentences} sentence(s)**.
     - Do not write more or fewer sentences.
-    - Each sentence should be concise, factual, and focused.
+    - Each sentence should be concise, factual, and focused
     - Avoid introductions, commentary, or meta text.
 
     Text to summarize:
