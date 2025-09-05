@@ -96,4 +96,26 @@ As AI technology continues to evolve, it highlights the ongoing interplay betwee
 
 
 
+### Task 4 – Creating an Agent for Summarization
 
+In this task, we introduced the **concept of tools and agents** in LangChain.  
+Unlike Task 3, where we explicitly combined a retriever with the summarizer, Task 4 demonstrates how an **agent can autonomously decide which tools to use** based on the user’s request.  
+
+We first defined a custom tool called **“TextSummarizer”**, which wrapped around our summarization chain from Task 2. This tool was given a clear description that explained its purpose — to summarize input text into exactly three sentences.  
+
+Next, we initialized a **zero-shot-react-description agent** using `AzureChatOpenAI`. The agent was provided with the summarizer tool and could decide on its own when to call it. This setup showed how LangChain’s agent framework can make interactions more flexible, since the agent interprets user intent and dynamically selects the right tool to respond.
+
+This task demonstrated the advantage of using agents:  
+- Instead of chaining tools manually, the agent is empowered to reason about vague or broad instructions.  
+- It can still rely on the summarizer tool when summarization is explicitly or implicitly required.  
+- This makes the system more **generalizable and adaptable to future use cases**.  
+
+**Example Output:**  
+
+Test 1 – Healthcare Summary (3 sentences):  
+Artificial Intelligence is enhancing healthcare through improved diagnostics, personalized treatment, and efficient hospital operations. AI can analyze medical images with greater accuracy than humans, facilitating earlier disease detection, while predictive models and chatbots enhance patient engagement and anticipate needs. Despite these advancements, challenges related to data privacy, trust, and fairness in AI decision-making persist.  
+
+Test 2 – Vague Request:  
+Recent discoveries in the Amazon rainforest have uncovered many new species of plants and animals, emphasizing its rich biodiversity. These findings underscore the necessity of conserving the ecosystem, which is essential for regulating the Earth's climate. Additionally, evidence of ancient human settlements reveals that the region has been inhabited for thousands of years, reflecting the enduring connection between humans and nature in the Amazon.  
+
+---
