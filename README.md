@@ -54,5 +54,46 @@ Artificial intelligence (AI) simulates human intelligence in machines, evolving 
 ✅ **Output demonstrates flexible summarization length** (3 vs 1 sentence) and validates the reusable summarizer design for later tasks.
 
 
+### Task 3: Exploring Retrievers with Summarization
+
+For this task, we created a 500-word sample text file (`ai_intro.txt`) and used LangChain’s `TextLoader` to load the file. The text was then split into smaller chunks using `RecursiveCharacterTextSplitter`. We stored the embeddings in an in-memory FAISS vector store using `AzureOpenAIEmbeddings`, built a retriever, and queried it with the term **"AI milestones"**. The retrieved text was then passed to our summarization chain from Task 2 to generate a summary.
+
+#### Output
+
+$ python -m task_3.task3
+
+📌 **Retrieved Chunks:**
+
+--- **Chunk 1** ---  
+From its early theoretical roots to its modern-day applications, the history of AI is a story of cycles of optimism, setbacks, and breakthroughs. Each era has contributed key milestones that have  
+
+--- **Chunk 2** ---  
+AI quickly spread across industries, revolutionizing healthcare, finance, transportation, and entertainment. Virtual assistants like Siri, Alexa, and Google Assistant became household names, while  
+
+--- **Chunk 3** ---  
+that have brought us closer to machines capable of augmenting human intelligence. As AI continues to advance, its history reminds us that progress often comes in waves, shaped by innovation,  
+
+--- **Chunk 4** ---  
+names, while self-driving car research advanced rapidly. In healthcare, AI-assisted diagnostics began improving accuracy in detecting diseases like cancer from medical images. In business, AI tools  
+
+📌 **Complete Retrieved Text:**  
+
+From its early theoretical roots to its modern-day applications, the history of AI is a story of cycles of optimism, setbacks, and breakthroughs. Each era has contributed key milestones that have.  
+
+AI quickly spread across industries, revolutionizing healthcare, finance, transportation, and entertainment. Virtual assistants like Siri, Alexa, and Google Assistant became household names, while.  
+
+That have brought us closer to machines capable of augmenting human intelligence. As AI continues to advance, its history reminds us that progress often comes in waves, shaped by innovation.  
+
+Names, while self-driving car research advanced rapidly. In healthcare, AI-assisted diagnostics began improving accuracy in detecting diseases like cancer from medical images. In business, AI tools.  
+
+📌 **Summary:**  
+
+The history of AI is marked by cycles of optimism, setbacks, and breakthroughs, leading to significant advancements across various industries.  
+
+Key milestones include the rise of virtual assistants and improvements in healthcare diagnostics, particularly in detecting diseases like cancer.  
+
+As AI technology continues to evolve, it highlights the ongoing interplay between innovation and practical applications.
+
+
 
 
