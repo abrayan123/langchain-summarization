@@ -1,11 +1,11 @@
 from langchain_openai import AzureChatOpenAI
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
+from langchain.schema.runnable import RunnablePassthrough
 from utils.env_loader import load_env_vars
 
 
-def build_summarization_chain(sentences: int = 3, memory_type: str | None = None) -> LLMChain:
+def build_summarization_chain(sentences: int = 3, memory_type: str | None = None):
     """
     Returns a reusable summarization chain, optionally with memory.
     This can be imported and reused in later tasks.
@@ -18,7 +18,7 @@ def build_summarization_chain(sentences: int = 3, memory_type: str | None = None
             - None: No memory
 
     Returns:
-        LLMChain: A chain ready to summarize text.
+        A Runnable chain ready to summarize text.
     """
     creds = load_env_vars()
 
@@ -46,7 +46,6 @@ def build_summarization_chain(sentences: int = 3, memory_type: str | None = None
     prompt = PromptTemplate(template=template, input_variables=["text"])
 
     # Optional memory integration
-    memory = None
     if memory_type == "buffer":
         memory = ConversationBufferMemory(
             memory_key="chat_history",
@@ -54,6 +53,13 @@ def build_summarization_chain(sentences: int = 3, memory_type: str | None = None
             k=3,  # last 3 interactions
             return_messages=True
         )
+        chain = (
+            {"text": RunnablePassthrough()} 
+            | prompt 
+            | llm 
+        )
+        return memory.chain(chain)
+
     elif memory_type == "summary":
         memory = ConversationSummaryMemory(
             memory_key="chat_history",
@@ -61,8 +67,12 @@ def build_summarization_chain(sentences: int = 3, memory_type: str | None = None
             llm=llm,
             return_messages=True
         )
+        chain = (
+            {"text": RunnablePassthrough()} 
+            | prompt 
+            | llm 
+        )
+        return memory.chain(chain)
 
-    if memory:
-        return LLMChain(llm=llm, prompt=prompt, memory=memory, verbose=True)
-
-    return LLMChain(llm=llm, prompt=prompt, verbose=True)
+    # Default: no memory
+    return prompt | llm

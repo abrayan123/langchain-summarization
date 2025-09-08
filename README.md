@@ -191,3 +191,77 @@ However, deep learning demands significant data and computational power, which r
 With **ConversationBufferMemory**, the system recalls the previous machine learning summary verbatim, ensuring accuracy and explicit continuity. This makes it well-suited for short sessions where exact details are important.  
 
 With **ConversationSummaryMemory**, the system relies on compressed summaries, which capture the gist of prior interactions but sometimes introduce verbosity or redundancy. While this reduces accuracy slightly, it scales better for longer sessions by keeping memory compact.   
+
+
+
+## Task 7: Leveraging Document Loaders for Diverse Sources
+
+This task demonstrates how to use LangChain’s document loaders to process information from different sources — a PDF and a live webpage — then compare the quality of AI-generated summaries.
+
+---
+
+## 🔧 Implementation Steps
+
+1. **Load Sources**
+   - **PDF**: Used `PyPDFLoader` to load a 2-page document on *AI ethics* published by IFPMA.  
+   - **Webpage**: Used `WebBaseLoader` to scrape content from IBM’s [AI Ethics topic page](https://www.ibm.com/think/topics/ai-ethics).
+
+2. **Chunking**
+   - Applied `CharacterTextSplitter` with a chunk size of **150** and an overlap of **30**.
+   - ⚠️ Noted that some chunks exceeded the size due to formatting of the source documents.
+
+3. **Vector Store**
+   - Created separate **FAISS** vector stores for PDF and web chunks using `AzureOpenAIEmbeddings`.
+
+4. **Summarization**
+   - Queried both sources with:  
+     ```
+     "AI challenges"
+     ```
+   - Summarized retrieved content using the reusable summarization chain.
+
+---
+
+## 📄 Summaries
+
+### PDF Summary (Source: IFPMA AI Ethics Principles, July 2022)
+
+> The IFPMA AI Ethics Principles emphasize the responsible development and use of AI in healthcare, aiming to enhance individual well-being while addressing concerns related to misuse and bias. Member companies are encouraged to implement these principles with a focus on accountability, human control, and fairness, ensuring that AI systems respect the rights and dignity of individuals. The principles are designed to align with existing regulations and promote ethical decision-making in the deployment of AI technologies.
+
+**Accuracy Check**  
+- ✅ Closely matches the official PDF content.  
+- ✅ Captures the core themes of **accountability**, **human control**, **fairness**, and **responsible AI in healthcare**.  
+- ➡️ **Conclusion**: Highly accurate and faithful summary.
+
+---
+
+### Web Summary (Source: IBM AI Ethics Topic Page)
+
+> A survey of 2,000 organizations revealed insights into the effectiveness of their AI initiatives. Key concerns identified include trust, transparency, and governance in AI. The findings aim to help organizations understand what strategies are successful and how to advance their AI efforts.
+
+**Accuracy Check**  
+- ✅ Correctly identifies **trust**, **transparency**, and **governance** as core AI ethics concerns.  
+- ❌ Incorrectly mentions a **“survey of 2,000 organizations”**, which does not appear in the IBM source.  
+- ➡️ **Conclusion**: Thematically aligned but factually inaccurate due to fabricated survey detail.
+
+---
+
+## 🔍 Comparison
+
+- **PDF Summary**:  
+  - Formal, accurate, and fully aligned with source content.  
+  - Faithfully represents the principles outlined in the IFPMA document.  
+
+- **Web Summary**:  
+  - Captures thematic concerns but introduces fabricated details (survey).  
+  - Less reliable despite highlighting correct ethical dimensions.
+
+---
+
+## 🏆 Final Conclusion
+
+- The **PDF summary** is **more accurate and reliable**, directly reflecting its structured source material.  
+- The **Web summary**, while thematically correct, is **less trustworthy** due to the addition of unsupported details.  
+
+This illustrates how the **quality of summaries can vary depending on the source structure and clarity** — PDFs with well-defined principles often yield more accurate AI-generated summaries than broader, dynamically structured webpages.
+

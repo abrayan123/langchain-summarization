@@ -42,3 +42,7 @@ typing-inspection
 typing_extensions
 urllib3
 zstandard
+
+pypdf
+beautifulsoup4
+html2text
