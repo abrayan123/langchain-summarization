@@ -1,11 +1,23 @@
-# from utils.env_loader import load_env_vars
 from utils.env_loader import load_env_vars
+import os
 
 def main():
-    creds = load_env_vars()
+    # Load variables into memory
+    load_env_vars()
+
     print("Environment Variables Loaded:")
-    for key, value in creds.items():
-        masked = value[:5] + "..." if value else "Not Found"
+
+    keys = [
+        "AZURE_OPENAI_API_KEY",
+        "AZURE_OPENAI_ENDPOINT",
+        "AZURE_OPENAI_API_VERSION",
+        "AZURE_OPENAI_CHAT_DEPLOYMENT",
+        "AZURE_OPENAI_EMBEDDING_DEPLOYMENT",
+    ]
+
+    for key in keys:
+        value = os.getenv(key)
+        masked = value[:6] + "..." if value else "Not Found"
         print(f"{key}: {masked}")
 
 if __name__ == "__main__":
