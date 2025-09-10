@@ -280,3 +280,46 @@ The **PDF summary** highlights overarching governance, accountability, and healt
 The **Web summary** zeroes in on technical bias issues like language and gender.  
 
 Together, these results demonstrate how **different document structures yield different emphases**: structured policy documents (PDFs) capture broader frameworks, while encyclopedic sources (Wikipedia) highlight detailed, categorized issues.  
+
+
+
+
+# Task 9: Experimenting with Multi-Query Retrieval
+
+## Overview
+In this task, we extended our retriever pipeline to support **Multi-Query Retrieval**.  
+Unlike the standard single-query retriever, the multi-query version reformulates the user query into multiple alternate queries.  
+This helps retrieve a **wider range of relevant chunks**, often producing **richer and more balanced summaries**.
+
+---
+
+## Experiment
+
+**Original Input Text (excerpt):**  
+A long passage covering the history of Artificial Intelligence — from Turing and the Dartmouth Conference to AI winters, the rise of Deep Learning, AlphaGo, modern applications (healthcare, self-driving cars, assistants), and today’s focus on ethics and governance.
+
+---
+
+### 🔹 Single-query Summary
+
+AI research progressed rapidly, leading to significant advancements in self-driving cars, healthcare diagnostics, and business tools that enhance human intelligence. Virtual assistants such as Siri, Alexa, and Google Assistant gained widespread recognition, while improvements in natural language processing and speech recognition set the stage for future developments. The evolution of AI has transformed various industries, including healthcare, finance, transportation, and entertainment, highlighting the cyclical nature of technological progress.
+
+---
+
+### 🔹 Multi-query Summary
+
+The 2000s and 2010s saw significant advancements in AI, particularly through deep learning, leading to breakthroughs in image recognition and speech processing. This progress has prompted global efforts to establish frameworks for trustworthy AI development, as its applications have transformed various industries, including healthcare and finance. The history of AI reflects a cycle of optimism and setbacks, with each era contributing to its evolution as a field.
+
+---
+
+## Comparison
+- **Single-query Retriever**: Narrower focus, emphasizing **modern applications** (self-driving cars, healthcare, assistants).  
+- **Multi-query Retriever**: Broader coverage, highlighting **historical cycles and governance**, but less detail on applications.  
+
+Together, both approaches complement each other — one captures **applications and industry impact**, while the other emphasizes **historical progression and ethics**.
+
+---
+
+## Key Takeaway
+- Single-query retrieval works well for **direct, focused summaries**.  
+- Multi-query retrieval is better at **broad, balanced coverage** of complex topics.  

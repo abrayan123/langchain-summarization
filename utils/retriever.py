@@ -4,6 +4,12 @@ from langchain_community.document_loaders import TextLoader, PyPDFLoader, WebBas
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import AzureOpenAIEmbeddings
+from langchain.retrievers import MultiQueryRetriever
+from langchain_openai import AzureChatOpenAI
+
+
+# load environment variables
+load_env_vars()
 
 def build_retriever(source: str, source_type: str = "text", chunk_size: int = 200, overlap: int = 20):
     """
@@ -18,7 +24,6 @@ def build_retriever(source: str, source_type: str = "text", chunk_size: int = 20
     Returns:
         retriever object
     """
-    load_env_vars()
 
     # Select loader
     if source_type == "text":
@@ -49,3 +54,30 @@ def build_retriever(source: str, source_type: str = "text", chunk_size: int = 20
     # Vector store
     vectorstore = FAISS.from_documents(chunks, embeddings)
     return vectorstore.as_retriever()
+
+
+
+def build_multiquery_retriever(source: str, source_type: str = "text", num_queries: int = 3):
+    """
+    Builds a MultiQueryRetriever for deeper retrieval.
+
+    Args:
+        source (str): path to file or URL
+        source_type (str): one of {"text", "pdf", "web"}
+        num_queries (int): number of alternate queries to generate
+
+    Returns:
+        MultiQueryRetriever
+    """
+    retriever = build_retriever(source, source_type)
+
+    llm = AzureChatOpenAI(
+        azure_deployment=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
+        temperature=0
+    )
+
+    return MultiQueryRetriever.from_llm(
+        retriever=retriever,
+        llm=llm,
+        include_original=True
+    )
