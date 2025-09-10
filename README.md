@@ -323,3 +323,67 @@ Together, both approaches complement each other — one captures **applications 
 ## Key Takeaway
 - Single-query retrieval works well for **direct, focused summaries**.  
 - Multi-query retrieval is better at **broad, balanced coverage** of complex topics.  
+
+
+
+## Task 10: Building a Question-Answering Chain on Summaries
+
+
+### Objective
+
+- Summarize the `ai_intro.txt` document.  
+
+- Build a Question-Answering (QA) chain that can answer based on either:  
+  - The **summary** of the document.  
+  - The **full document text**.  
+
+- Compare the responses for conciseness and accuracy.  
+
+
+### Implementation
+
+- A summarization chain (`build_summarization_chain`) was used to condense the entire document into 5 sentences.  
+
+- A QA chain was created using a `PromptTemplate` and the LCEL `|` operator (`prompt | llm`).  
+
+- The question asked was:  
+
+  **“What’s the key event mentioned?”**  
+
+
+### Results
+
+
+**Document Summary (5 sentences):**
+
+> The history of artificial intelligence (AI) began in the 1940s and 1950s with foundational work by pioneers like Alan Turing and John von Neumann, who developed key concepts in computation and algorithms.  
+
+> The term "artificial intelligence" was coined in 1956 at the Dartmouth Conference, marking the start of AI as an academic discipline, with early successes in problem-solving programs.  
+
+> However, the field faced an "AI winter" in the 1970s and 1980s due to limited computational power and funding, despite ongoing developments in expert systems.  
+
+> The resurgence of AI in the 1990s was fueled by advancements in computing and machine learning, highlighted by IBM's Deep Blue defeating chess champion Garry Kasparov.  
+
+> Today, AI is rapidly evolving with large language models and deep learning, impacting various industries while raising important ethical and societal concerns.  
+
+
+
+**Q&A on Summary:**
+
+> The key event mentioned is the coining of the term "artificial intelligence" in 1956 at the Dartmouth Conference.  
+
+
+
+**Q&A on Full Document:**
+
+> The key event mentioned is the Dartmouth Conference in 1956, where the term "artificial intelligence" was coined and is recognized as the birth of AI as an academic discipline.  
+
+
+
+### Comparison
+
+- **Summary-based QA** → More concise and direct.  
+
+- **Full-text QA** → Slightly more detailed, includes the context that the event is considered the “birth of AI as an academic discipline.”  
+
+- Both answers are correct, but the full-text QA provides richer context, while the summary QA is more efficient.  
