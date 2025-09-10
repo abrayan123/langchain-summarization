@@ -1,6 +1,8 @@
 # utils/tools.py
 from langchain.agents import Tool
 from utils.summarizer import build_summarization_chain
+from utils.retriever import build_retriever
+
 
 def build_text_summarizer_tool(
     name: str = "TextSummarizer",
@@ -20,3 +22,39 @@ def build_text_summarizer_tool(
         return chain.invoke({"text": text})
 
     return Tool(name=name, func=_summarize, description=description)
+
+
+def build_retriever_tool(
+    file_path: str,
+    name: str = "TextRetriever",
+    description: str | None = None,
+) -> Tool:
+    """Wrap Task 3 retriever as a LangChain Tool."""
+    retriever = build_retriever(file_path)
+
+    if description is None:
+        description = (
+            "Retrieves relevant chunks from a document based on a query. "
+            "Input: a search query string. Output: retrieved text passages."
+        )
+
+    def _retrieve(query: str) -> str:
+        docs = retriever.invoke(query)
+        return "\n\n".join([doc.page_content for doc in docs])
+
+    return Tool(name=name, func=_retrieve, description=description)
+
+
+def build_word_count_tool(
+    name: str = "WordCounter",
+    description: str | None = None,
+) -> Tool:
+    """Simple tool to count words in a given text."""
+    if description is None:
+        description = "Counts the number of words in the given text string."
+
+    def _count_words(text: str) -> str:
+        count = len(text.split())
+        return f"Word count: {count}"
+
+    return Tool(name=name, func=_count_words, description=description)

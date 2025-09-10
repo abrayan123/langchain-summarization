@@ -127,3 +127,25 @@ Recent discoveries in the Amazon rainforest have uncovered many new species of p
 
 
 
+## Task 5: Building and Testing Agents with Tools
+
+In this task, the retriever, summarizer, and word counter were integrated into a single agent workflow. The purpose was to demonstrate how the agent could retrieve relevant information from a document, generate a concise summary, and optionally perform additional analysis such as counting the words in the generated output.  
+
+The retriever tool fetched relevant chunks of information from the source text. These chunks were then passed to the summarizer, which condensed the content into a short summary. Finally, the word counter tool was used in the second test to verify the length of the generated summary. Together, these tools highlight how agents can coordinate multiple steps in a pipeline to perform more advanced tasks.  
+
+During the first test, the agent was only asked to provide a summary of AI breakthroughs. The final result was:  
+
+**Test 1 Summary:**  
+"AI breakthroughs have significantly improved diagnostics in healthcare and accelerated self-driving car research in transportation. The adoption of AI tools has transformed business practices and integrated virtual assistants like Siri and Alexa into daily life. These developments highlight AI's ongoing role in enhancing human intelligence and transforming multiple industries."  
+
+In the second test, the agent was required to both summarize and count the words in the summary. The retrieved information was condensed into three sentences, followed by word count verification. The final result was:  
+
+**Test 2 Summary + Word Count:**  
+"AI-assisted diagnostics improved disease detection accuracy in healthcare, particularly for cancer. The technology rapidly spread across various industries, transforming sectors such as finance, transportation, and entertainment. Virtual assistants like Siri, Alexa, and Google Assistant gained widespread recognition as AI tools advanced toward augmenting human intelligence. The word count of this summary is 45."  
+
+The word count of this summary was confirmed to be **45 words**.  
+
+This demonstrates how the same agent can perform different levels of analysis depending on the requirements — in one case producing only a summary, and in another extending the process to include validation through word counting. 
+
+
+
