@@ -198,3 +198,85 @@ With **ConversationBufferMemory**, the system recalls the previous machine learn
 With **ConversationSummaryMemory**, the system relies on compressed summaries, which capture the gist of prior interactions but sometimes introduce verbosity or redundancy. While this reduces accuracy slightly, it scales better for longer sessions by keeping memory compact.  
 
 
+
+## Task 7: Leveraging Document Loaders for Diverse Sources
+
+This task demonstrates how to use LangChain’s document loaders to process information from two different sources — a **PDF** and a **live Wikipedia page** — and compare the quality of AI-generated summaries.
+
+---
+
+## 🔧 Implementation Steps
+
+1. **Load Sources**  
+   - **PDF**: Used `PyPDFLoader` to load the IFPMA *AI Ethics Principles (July 2022)* PDF.  
+   - **Webpage**: Used `WebBaseLoader` to scrape content from Wikipedia’s  
+     [Ethics of Artificial Intelligence page](https://en.wikipedia.org/wiki/Ethics_of_artificial_intelligence).
+
+2. **Chunking**  
+   Used `RecursiveCharacterTextSplitter` with a **200** character chunk size and **20** overlap.  
+   Multiple relevant chunks were retrieved for each query, then combined before summarization.
+
+3. **Retriever & Vector Store**  
+   Instead of building FAISS stores manually, the centralized **`build_retriever`** utility from Task 3 was reused.  
+   Chunks were embedded with `AzureOpenAIEmbeddings`.
+
+4. **Summarization**  
+   Both sources were queried with:  
+        "AI challenges"
+
+
+The retrieved content was summarized using the reusable summarization chain from Task 2.
+
+5. **Debugging Aid**  
+Retrieved chunks were printed before summarization to observe the raw context provided to the model.
+
+---
+
+## 📄 Summaries
+
+### PDF Summary (Source: IFPMA AI Ethics Principles, July 2022)
+
+AI systems can produce outputs like content, predictions, and recommendations that impact various environments and opportunities.  
+
+However, the emerging technology raises concerns about potential misuse, inadequate accountability, and varying risk levels in different applications, particularly in healthcare.  
+
+A risk-based approach is essential, especially in areas like early research versus late clinical development, where the implications of AI use can differ significantly.  
+
+**Accuracy Check**  
+- ✅ Closely reflects the official IFPMA text.  
+- ✅ Captures **misuse**, **accountability**, and **risk-based application** concerns.  
+- ➡️ **Conclusion**: Accurate and faithful to the PDF.
+
+---
+
+### Web Summary (Source: Wikipedia – Ethics of AI)
+
+Algorithmic biases present significant challenges in the responsible development and use of AI.  
+
+These biases include language bias and gender bias, which can affect the fairness and effectiveness of AI systems.  
+
+Addressing these issues is crucial for ensuring ethical AI practices.  
+
+**Accuracy Check**  
+- ✅ Correctly identifies **algorithmic bias**, **language bias**, and **gender bias** from Wikipedia.  
+- ✅ Concise and thematically aligned with the source.  
+- ➡️ **Conclusion**: Accurate, well-grounded, and free of fabricated details.
+
+---
+
+## 🔍 Comparison
+
+The **PDF summary** is broader in scope, covering issues of **risk, accountability, and misuse**, with a strong emphasis on the healthcare context.  
+
+The **Web summary** is more focused, centering specifically on **algorithmic bias** issues.  
+While narrower, it is precise and well aligned with the Wikipedia text.  
+
+---
+
+## 🏆 Final Conclusion
+
+The **PDF summary** highlights overarching governance, accountability, and healthcare-specific risks.  
+
+The **Web summary** zeroes in on technical bias issues like language and gender.  
+
+Together, these results demonstrate how **different document structures yield different emphases**: structured policy documents (PDFs) capture broader frameworks, while encyclopedic sources (Wikipedia) highlight detailed, categorized issues.  
