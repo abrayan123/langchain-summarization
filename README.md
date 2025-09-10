@@ -149,3 +149,52 @@ This demonstrates how the same agent can perform different levels of analysis de
 
 
 
+## Task 6: Using Memory to Improve Summarization
+
+In this task, the goal was to enhance our summarization chain from Task 2 by integrating memory. Memory enables the system to recall prior interactions and use that context to influence future outputs. This is particularly useful when working with related pieces of text where continuity and awareness of past summaries matter.
+
+Two types of memory were implemented using LangChain: **ConversationBufferMemory** and **ConversationSummaryMemory**. The buffer memory stores past interactions verbatim, while the summary memory compresses them into shorter summaries. Both were tested by first summarizing a 100-word text about *machine learning* and then a related 100-word text about *deep learning*, explicitly instructing the model to consider prior conversation in its response.
+
+The results show how memory influences the second summary differently depending on the type of memory used.
+
+---
+
+### 🔹 Results with ConversationBufferMemory
+
+**First Summary (Machine Learning):**
+
+Machine learning is a branch of artificial intelligence that allows computers to learn from data and improve their performance without explicit programming.  
+It is utilized in various applications, including spam filtering, fraud detection, and predictive analytics, across multiple industries.  
+Despite its advantages, challenges such as bias, transparency, and ethical responsibility need to be addressed as the technology becomes more widely adopted.  
+
+**Second Summary (Deep Learning, considering prior summary):**
+
+Deep learning is a branch of machine learning that utilizes multi-layered neural networks to analyze complex data.  
+It has led to advancements in areas such as computer vision, natural language processing, and speech recognition, powering applications like facial recognition and virtual assistants.  
+However, deep learning demands significant data and computational power, which raises issues related to fairness, energy use, and accessibility.  
+
+---
+
+### 🔹 Results with ConversationSummaryMemory
+
+**First Summary (Machine Learning):**
+
+Machine learning is a branch of artificial intelligence that allows computers to learn from data and improve their performance without explicit programming.  
+It is utilized in various applications, including spam filtering, fraud detection, and predictive analytics, across multiple industries.  
+Despite its advantages, challenges such as bias, transparency, and ethical responsibility need to be addressed as the technology becomes more widely adopted.  
+
+**Second Summary (Deep Learning, considering prior summary):**
+
+Deep learning is a branch of machine learning that utilizes multi-layered neural networks to analyze complex data.  
+It has led to advancements in areas such as computer vision, natural language processing, and speech recognition, powering applications like facial recognition and virtual assistants.  
+However, deep learning demands significant data and computational power, which raises issues related to fairness, energy use, and accessibility.  
+
+---
+
+### 🔹 Comparison and Insights
+
+With **ConversationBufferMemory**, the system recalls the previous machine learning summary verbatim, ensuring accuracy and explicit continuity. This makes it well-suited for short sessions where exact details are important.  
+
+With **ConversationSummaryMemory**, the system relies on compressed summaries, which capture the gist of prior interactions but sometimes introduce verbosity or redundancy. While this reduces accuracy slightly, it scales better for longer sessions by keeping memory compact.  
+
+
