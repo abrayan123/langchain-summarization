@@ -41,7 +41,10 @@ def build_retriever(source: str, source_type: str = "text", chunk_size: int = 20
 
     # Embeddings from Azure
     deployment_name = os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT")
-    embeddings = AzureOpenAIEmbeddings(azure_deployment=deployment_name)
+    
+    embeddings = AzureOpenAIEmbeddings(
+        azure_deployment=deployment_name
+    )
 
     # Vector store
     vectorstore = FAISS.from_documents(chunks, embeddings)
