@@ -4,6 +4,7 @@ from langchain_openai import AzureChatOpenAI
 from langchain.agents import initialize_agent
 from typing import Sequence
 
+
 def build_zeroshot_agent(tools: Sequence, verbose: bool = False):
     """
     Build a zero-shot-react-description agent with AzureChatOpenAI and provided tools.

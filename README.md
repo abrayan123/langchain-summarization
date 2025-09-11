@@ -387,3 +387,55 @@ Together, both approaches complement each other — one captures **applications 
 - **Full-text QA** → Slightly more detailed, includes the context that the event is considered the “birth of AI as an academic discipline.”  
 
 - Both answers are correct, but the full-text QA provides richer context, while the summary QA is more efficient.  
+
+
+
+## Task 11: Integrating External Tools with Agents
+
+**Objective:**  
+Extend the agent from Task 5 by integrating **external tools**:
+1. A tool that fetches the current date (using Python’s `datetime` module).  
+2. A mock web search tool that returns a static 50-word response.  
+
+The goal was to test the agent with two queries:  
+- `"Summarize this 100-word text about AI and tell me today’s date"`  
+- `"Summarize AI trends and search for recent updates"`  
+
+---
+
+### Tools Added
+- **DateFetcher** → returns today’s date using Python’s `datetime`.  
+- **MockWebSearch** → simulates a web search by returning a fixed text block (mock response).  
+
+---
+
+### Results
+
+#### Test 1: Summarize + Date
+**Query:** Summarize this 100-word text about AI and tell me today’s date  
+
+**Result:**  
+The summary of the text is that artificial intelligence (AI) is revolutionizing various industries, enhancing automation, personalization, and efficiency.  
+In sectors like healthcare, finance, and transportation, AI plays crucial roles in diagnostics, fraud detection, and self-driving technology.  
+Ongoing discussions among policymakers, researchers, and companies focus on addressing ethical concerns related to fairness, bias, and transparency in AI development.  
+
+**Today’s date is September 11, 2025.**
+
+---
+
+#### Test 2: Summarize + Mock Web Search
+**Query:** Summarize AI trends and search for recent updates  
+
+**Result:**  
+Current AI trends include advancements in natural language processing, increased healthcare applications, and the rise of generative models, with a focus on ethical AI and governance.  
+Recent updates highlight progress in natural language models and responsible AI frameworks, indicating the industry’s rapid evolution.  
+Overall, AI continues to expand its applications across various sectors while emphasizing transparency and regulation.  
+
+---
+
+### Comparison to Previous Tasks
+- Unlike earlier tasks that only summarized **static documents (e.g., `ai_intro.txt`)**, Task 11 demonstrates how agents can integrate **dynamic external tools**.  
+- While the search tool is a mock, it shows how real-world integrations (like APIs) could enable **fresh, up-to-date insights** beyond stored documents.  
+- This makes the agent more flexible and closer to real-world assistants that combine **retrieval + reasoning + external lookups**.  
+
+---

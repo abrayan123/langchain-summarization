@@ -2,6 +2,7 @@
 from langchain.agents import Tool
 from utils.summarizer import build_summarization_chain
 from utils.retriever import build_retriever
+import datetime
 
 
 def build_text_summarizer_tool(
@@ -58,3 +59,40 @@ def build_word_count_tool(
         return f"Word count: {count}"
 
     return Tool(name=name, func=_count_words, description=description)
+
+
+def build_date_tool(
+    name: str = "DateFetcher",
+    description: str | None = None,
+) -> Tool:
+    """Tool that fetches today’s date."""
+    if description is None:
+        description = "Fetches today’s current date."
+
+    def _get_date(_: str = "") -> str:
+        today = datetime.date.today().strftime("%B %d, %Y")
+        return f"Today's date is {today}."
+
+    return Tool(name=name, func=_get_date, description=description)
+
+
+def build_mock_web_search_tool(
+    name: str = "MockWebSearch",
+    description: str | None = None,
+) -> Tool:
+    """Tool that simulates a web search with a static response."""
+    if description is None:
+        description = (
+            "Performs a mock web search and always returns a 50-word static response."
+        )
+
+    def _search(query: str) -> str:
+        return (
+            "Mock Search Results: Artificial Intelligence is evolving rapidly. "
+            "Recent updates highlight progress in natural language models, "
+            "responsible AI frameworks, and industry adoption. While this is a "
+            "simulated response, it represents how external search tools could "
+            "enrich agent capabilities with up-to-date insights."
+        )
+
+    return Tool(name=name, func=_search, description=description)
